@@ -1,25 +1,42 @@
-# 8-Bit ALU & Accumulator System in Vivado
+# ⚡ 8-Bit ALU & Accumulator System — Vivado
 
-This repository contains the Verilog RTL design, IP packaging, and system-level integration of a custom 8-bit Arithmetic Logic Unit (ALU) into a sequential accumulator architecture using Xilinx Vivado.
+> **A reusable 8-bit ALU IP core integrated into a sequential accumulator architecture using Verilog and Xilinx Vivado.**
 
-## Project Overview
-* **Custom IP Creation:** Designed and packaged a combinational 8-bit ALU supporting basic arithmetic and logic operations.
-* **IP Reusability:** Exported the ALU as a standalone Xilinx IP core (`.xci`).
-* **System Integration:** Instantiated the ALU IP inside a top-level hardware wrapper (`alu_accumulator.v`).
-* **Sequential Logic:** Implemented a clock-driven memory register (Flip-Flops) with a Clock Enable (CE) pin to create a feedback loop, effectively turning the combinational ALU into an accumulator that maintains a running total.
+This project demonstrates the complete flow of designing a custom **8-bit Arithmetic Logic Unit (ALU)**, packaging it as a reusable **Vivado IP core**, and integrating that IP into a clock-driven **Accumulator System**.
 
-## Architecture Diagram
-* **Core Logic:** 8-bit ALU (Combinational block)
-* **Memory:** RTL_REG_ASYNC (Sequential Flip-Flop Register)
-* **Feedback Loop:** The output `Q` of the memory register routes back into Input `A` of the ALU to execute running calculations on sequential clock pulses.
+The project focuses on **RTL design, IP packaging, IP reuse, combinational logic, sequential logic, and hardware system integration**.
 
-![RTL Schematic](https://github.com/vg-vishal/8Bit-ALU-Accumulator/blob/main/schematic.png)
+---
 
-## Simulation & Verification
-The design is verified via behavioral simulation. The testbench (`alu_accumulator_tb.v`) proves the system accurately updates the running total on the rising edge of the clock signal based on sequential input operations.
+## 🚀 Project Highlights
 
-![Simulation Waveform](https://github.com/vg-vishal/8Bit-ALU-Accumulator/blob/main/Wave%20Form%20output.png)
+- 🧮 Designed a custom **8-bit ALU** using Verilog HDL
+- 📦 Packaged the ALU as a **reusable Vivado IP Core**
+- 🔄 Imported and reused the custom IP in a separate Vivado project
+- 🧠 Integrated the ALU with a sequential accumulator architecture
+- ⏱️ Implemented clock-driven state updates using flip-flops
+- 🔁 Created a feedback path from the accumulator output back to the ALU
+- 🧪 Verified the complete system using behavioral simulation
+- 🛠️ Designed and tested using **Xilinx Vivado**
 
-## Author
-**[VISHAL GEDELA]**
-B.Tech Candidate, Class of 2028
+---
+
+## 🏗️ System Architecture
+
+The system consists of two major parts:
+
+### 1. 8-Bit ALU — Combinational Logic
+
+The custom ALU performs arithmetic and logical operations based on the 3-bit select input.
+
+```text
+        A[7:0] ───────────────┐
+                              │
+                              ▼
+                       ┌─────────────┐
+        B[7:0] ───────►│             │
+                       │  8-BIT ALU  │──────► Result[7:0]
+        S[2:0] ───────►│             │
+                       └──────┬──────┘
+                              │
+                         Carry / Zero
